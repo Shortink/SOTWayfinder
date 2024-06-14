@@ -1,7 +1,11 @@
+import netaddr
 import pydivert
 import json
 import requests
 from netaddr import IPNetwork, IPAddress
+
+region_list = ['eastasia', 'australiaeast', 'northeurope', 'westeurope', 'japaneast', 'centralus', 'eastus', 'eastus2',
+               'northcentralus', 'southcentralus', 'westcentralus', 'westus', 'westus2', 'westus3',]
 
 
 def find_ip():
@@ -22,6 +26,7 @@ def find_location(ip_port):
         ip_json = json.loads((requests.get(f'http://ip-api.com/json/{ip}?fields=status,regionName,city,org')).text)
     except requests.exceptions.RequestException:
         print(f"Unable to retrieve advanced location data for {ip_port}. Geolocation server might be down")
+        alternate_find_location(ip)
 
     else:
         if ip_json["status"] == "success":
@@ -45,10 +50,22 @@ def ip_query(ip, region_to_connect):
             return True
 
 
+def alternate_find_location(ip):
+    for regions in region_list:
+        try:
+            if ip_query(ip, regions) is True:
+                print(regions)
+                return
+            else:
+                continue
+        except (netaddr.AddrFormatError, netaddr.NotRegisteredError, netaddr.AddrConversionError):
+            pass
+
+
 def menu():
     option = int(input("\n1. Find Server IP \n2. Connect to specific region\n"))
     if option == 1:
-        find_location('13.91.92.183')
+        find_location(find_ip())
         input("Press any key to continue")
         menu()
     elif option == 2:
