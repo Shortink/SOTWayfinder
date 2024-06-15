@@ -70,7 +70,11 @@ def menu():
         menu()
     elif option == 2:
         region_id = input("Enter region to connect to...")
-        connect_region(region_id)
+        if region_id in region_list:
+            connect_region(region_id)
+        else:
+            print('Invalid region, try again')
+            menu()
 
 
 print('===============================================')
