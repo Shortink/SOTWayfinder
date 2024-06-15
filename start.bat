@@ -7,7 +7,7 @@ net session >nul 2>&1
 if %errorLevel% == 0 (
     cd /d %~dp0
     title SOT Wayfinder
-    pip install pydivert requests netaddr bs4
+    pip install -r requirements.txt
     cls
     python main.py
     pause
