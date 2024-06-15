@@ -1,4 +1,8 @@
 import json
+import re
+import requests
+from bs4 import BeautifulSoup
+from urllib.request import urlopen
 
 region_pair = {
     'eastasia': 1, 'australiaeast': 3, 'northeurope': 17, 'westeurope': 18, 'japaneast': 24, 'centralus': 31,
@@ -24,9 +28,21 @@ def retrieve_ip(region, name, file):
     return f'\"{name}\":\n{json_str}'
 
 
-def create_file():
-    file_name = input("Copy and enter name of downloaded file. ex 'ServiceTags_Public.......json': ")
-    #file_name = 'ServiceTags_Public_20240610.json'
+def find_download_link():
+    url = 'https://www.microsoft.com/en-us/download/details.aspx?id=56519'
+    res = urlopen(url).read()
+    soup = BeautifulSoup(res, "lxml")
+    for link in soup.find_all('a', attrs={'href': re.compile("^https://")}):
+        # retrieve actual url
+        temp_link = link.get('href')
+        x = re.search(r'\.json$', str(temp_link))
+        if x:
+            return temp_link
+        else:
+            pass
+
+
+def create_file(file_name):
     new_json = open('data.json', 'a')
     print("Updating IP database...")
 
@@ -42,4 +58,13 @@ def create_file():
     print("Completed")
 
 
-create_file()
+try:
+    download_link = find_download_link()
+
+except:
+    print("Failed to download files, try again later")
+
+else:
+    r = requests.get(download_link, allow_redirects=True)
+    open('ServiceTag_Public.json', 'wb').write(r.content)
+    create_file('ServiceTag_Public.json')
