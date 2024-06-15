@@ -3,6 +3,7 @@ import re
 import requests
 from bs4 import BeautifulSoup
 from urllib.request import urlopen
+import urllib
 
 region_pair = {
     'eastasia': 1, 'australiaeast': 3, 'northeurope': 17, 'westeurope': 18, 'japaneast': 24, 'centralus': 31,
@@ -30,8 +31,8 @@ def retrieve_ip(region, name, file):
 
 def find_download_link():
     url = 'https://www.microsoft.com/en-us/download/details.aspx?id=56519'
-    res = urlopen(url).read()
-    soup = BeautifulSoup(res, "lxml")
+    request = urllib.request.urlopen(url)
+    soup = BeautifulSoup(request.read(), "html.parser")
     for link in soup.find_all('a', attrs={'href': re.compile("^https://")}):
         # retrieve actual url
         temp_link = link.get('href')
