@@ -5,7 +5,7 @@ import requests
 from netaddr import IPNetwork, IPAddress
 
 region_list = ['eastasia', 'australiaeast', 'northeurope', 'westeurope', 'japaneast', 'centralus', 'eastus', 'eastus2',
-               'northcentralus', 'southcentralus', 'westcentralus', 'westus', 'westus2', 'westus3',]
+               'northcentralus', 'southcentralus', 'westcentralus', 'westus', 'westus2', 'ukwest', 'uksouth', 'westus3',]
 
 
 def find_ip():

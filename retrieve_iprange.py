@@ -2,13 +2,12 @@ import json
 import re
 import requests
 from bs4 import BeautifulSoup
-from urllib.request import urlopen
-import urllib
+import os
 
 region_pair = {
     'eastasia': 1, 'australiaeast': 3, 'northeurope': 17, 'westeurope': 18, 'japaneast': 24, 'centralus': 31,
     'eastus': 32, 'eastus2': 33, 'northcentralus': 34, 'southcentralus': 35, 'westcentralus': 36, 'westus': 37,
-    'westus2': 38, 'westus3': 79,
+    'westus2': 38, 'ukwest': 28, 'uksouth': 27, 'westus3': 79,
 }
 
 
@@ -31,8 +30,12 @@ def retrieve_ip(region, name, file):
 
 def find_download_link():
     url = 'https://www.microsoft.com/en-us/download/details.aspx?id=56519'
-    request = urllib.request.urlopen(url)
-    soup = BeautifulSoup(request.read(), "html.parser")
+    header = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
+                      'Chrome/125.0.0.0 Safari/537.36'
+    }
+    request = requests.get(url, headers=header)
+    soup = BeautifulSoup(request.text, "html.parser")
     for link in soup.find_all('a', attrs={'href': re.compile("^https://")}):
         # retrieve actual url
         temp_link = link.get('href')
@@ -44,6 +47,8 @@ def find_download_link():
 
 
 def create_file(file_name):
+    if os.path.isfile('data.json'):
+        os.remove('data.json')
     new_json = open('data.json', 'a')
     print("Updating IP database...")
 
@@ -56,6 +61,7 @@ def create_file(file_name):
             new_json.write(",")
 
     new_json.write("\n}")
+    os.remove(file_name)
     print("Completed")
 
 
