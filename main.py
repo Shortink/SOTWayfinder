@@ -4,8 +4,16 @@ import json
 import requests
 from netaddr import IPNetwork, IPAddress
 
-region_list = ['eastasia', 'australiaeast', 'northeurope', 'westeurope', 'japaneast', 'centralus', 'eastus', 'eastus2',
-               'northcentralus', 'southcentralus', 'westcentralus', 'westus', 'westus2', 'ukwest', 'uksouth', 'westus3',]
+region_list = ['eastasia', 'southeastasia', 'australiaeast', 'australiasoutheast', 'taiwannorth', 'brazilsouth',
+               'canadacentral', 'canadaeast', 'northeurope2', 'northeurope', 'westeurope', 'centralfrance',
+               'southfrance', 'centralindia', 'southindia', 'westindia', 'japaneast', 'japanwest', 'koreacentral',
+               'uksouth', 'ukwest', 'centralus', 'eastus', 'eastus2', 'northcentralus', 'southcentralus',
+               'westcentralus', 'westus', 'westus2', 'centraluseuap', 'eastus2euap', 'koreasouth', 'polandcentral',
+               'mexicocentral', 'australiacentral', 'australiacentral2', 'uaenorth', 'uaecentral', 'norwaye',
+               'jioindiacentral', 'jioindiawest', 'switzerlandn', 'switzerlandw', 'usstagee', 'usstagec', 'germanywc',
+               'germanyn', 'norwayw', 'swedensouth', 'swedencentral', 'brazilse', 'brazilne', 'westus3',
+               'southafricanorth', 'southafricawest', 'qatarcentral', 'israelcentral', 'spaincentral', 'italynorth',
+               'taiwannorthwest', 'malaysiasouth', ]
 
 
 def find_ip():

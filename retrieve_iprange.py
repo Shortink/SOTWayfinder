@@ -4,11 +4,18 @@ import requests
 from bs4 import BeautifulSoup
 import os
 
-region_pair = {
-    'eastasia': 1, 'australiaeast': 3, 'northeurope': 17, 'westeurope': 18, 'japaneast': 24, 'centralus': 31,
-    'eastus': 32, 'eastus2': 33, 'northcentralus': 34, 'southcentralus': 35, 'westcentralus': 36, 'westus': 37,
-    'westus2': 38, 'ukwest': 28, 'uksouth': 27, 'westus3': 79,
-}
+region_pair = {1: 'eastasia', 2: 'southeastasia', 3: 'australiaeast', 4: 'australiasoutheast', 8: 'taiwannorth',
+               9: 'brazilsouth', 11: 'canadacentral', 12: 'canadaeast', 16: 'northeurope2', 17: 'northeurope',
+               18: 'westeurope', 19: 'centralfrance', 20: 'southfrance', 21: 'centralindia', 22: 'southindia',
+               23: 'westindia', 24: 'japaneast', 25: 'japanwest', 26: 'koreacentral', 27: 'uksouth', 28: 'ukwest',
+               31: 'centralus', 32: 'eastus', 33: 'eastus2', 34: 'northcentralus', 35: 'southcentralus',
+               36: 'westcentralus', 37: 'westus', 38: 'westus2', 48: 'centraluseuap', 49: 'eastus2euap',
+               50: 'koreasouth', 52: 'polandcentral', 53: 'mexicocentral', 58: 'australiacentral',
+               59: 'australiacentral2', 60: 'uaenorth', 61: 'uaecentral', 63: 'norwaye', 64: 'jioindiacentral',
+               65: 'jioindiawest', 66: 'switzerlandn', 67: 'switzerlandw', 68: 'usstagee', 69: 'usstagec',
+               71: 'germanywc', 72: 'germanyn', 74: 'norwayw', 75: 'swedensouth', 76: 'swedencentral', 77: 'brazilse',
+               78: 'brazilne', 79: 'westus3', 82: 'southafricanorth', 83: 'southafricawest', 84: 'qatarcentral',
+               85: 'israelcentral', 88: 'spaincentral', 93: 'italynorth', 96: 'taiwannorthwest', 98: 'malaysiasouth'}
 
 
 def retrieve_ip(region, name, file):
@@ -54,8 +61,8 @@ def create_file(file_name):
 
     new_json.write("{\n")
     for keys, value in region_pair.items():
-        new_json.write(f"\n{retrieve_ip(value, keys, file_name)}")
-        if keys == 'westus3':  # ' prevent adding trailing comma to last json item
+        new_json.write(f"\n{retrieve_ip(keys, value, file_name)}")
+        if value == 'malaysiasouth':  # ' prevent adding trailing comma to last json item
             pass
         else:
             new_json.write(",")
