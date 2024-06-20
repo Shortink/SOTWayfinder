@@ -1,7 +1,7 @@
 ## How to Use:
 1. Clone Repo
 2. Download latest version of [Python](https://www.python.org/downloads/)
-3. Run update.bat
+3. Run update.bat (first time setup)
 6. Run start.bat as admin
 
 
